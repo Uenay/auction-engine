@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="init user" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <sql>
+            Create table user
+            (
+                id        bigserial PRIMARY KEY,
+                login     VARCHAR,
+                password  VARCHAR,
+                full_name VARCHAR,
+                balance   BIGINT
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="init user_index" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="user"/>
+        </preConditions>
+        <sql>
+            CREATE INDEX id_index ON user (id);
+            CREATE INDEX login_index ON user (login);
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="init role" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="role"/>
+            </not>
+        </preConditions>
+        <sql>
+            Create table role
+            (
+                id   bigserial PRIMARY KEY,
+                name VARCHAR
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="init role_index" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="role"/>
+        </preConditions>
+        <sql>
+            CREATE INDEX id_index ON role (id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="init role_to_user" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="role_to_user"/>
+            </not>
+        </preConditions>
+        <sql>
+            Create table role_to_user
+            (
+                user_id bigserial PRIMARY KEY,
+                role_id bigserial
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="init role_to_user_index" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="role_to_user"/>
+        </preConditions>
+        <sql>
+            CREATE INDEX user_id_index ON role_to_user (user_id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="init auction_lot" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="auction_lot"/>
+            </not>
+        </preConditions>
+        <sql>
+            Create table auction_lot
+            (
+                id                 bigserial PRIMARY KEY,
+                start_bet          BIGINT,
+                name               VARCHAR,
+                description        VARCHAR,
+                created_by_user_id bigserial,
+                final_bet          BIGINT,
+                purchaser_user_id  bigserial,
+                auction_id         bigserial,
+                image
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="init auction_lot_index" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="auction_lot"/>
+        </preConditions>
+        <sql>
+            CREATE INDEX id_index ON auction_lot (id);
+            CREATE INDEX created_by_user_id_index ON auction_lot (created_by_user_id);
+            CREATE INDEX purchaser_user_id_index ON auction_lot (purchaser_user_id);
+            CREATE INDEX auction_id_index ON auction_lot (auction_id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="init auction" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="auction"/>
+            </not>
+        </preConditions>
+        <sql>
+            Create table auction
+            (
+                id              bigserial PRIMARY KEY,
+                start_time      DATE,
+                end_time        DATE,
+                current_bet     BIGINT,
+                current_user_id bigserial
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="init auction_index" author="author name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="auction"/>
+        </preConditions>
+        <sql>
+            CREATE INDEX id_index ON auction (id);
+            CREATE INDEX current_user_id_index ON auction (current_user_id);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
