@@ -1,0 +1,4 @@
+FROM postgres:latest
+ENV POSTGRES_DB auction_engine
+ENV POSTGRES_USER root
+ENV POSTGRES_PASSWORD root

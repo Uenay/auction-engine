@@ -53,7 +53,7 @@
             <tableExists tableName="role"/>
         </preConditions>
         <sql>
-            CREATE INDEX id_index ON role (id);
+            CREATE INDEX role_id_index ON role (id);
         </sql>
     </changeSet>
 
@@ -102,7 +102,7 @@
             <tableExists tableName="image"/>
         </preConditions>
         <sql>
-            CREATE INDEX id_index ON image (id);
+            CREATE INDEX image_id_index ON image (id);
         </sql>
     </changeSet>
 
@@ -129,7 +129,7 @@
             <tableExists tableName="auction"/>
         </preConditions>
         <sql>
-            CREATE INDEX id_index ON auction (id);
+            CREATE INDEX auction_id_index ON auction (id);
             CREATE INDEX current_user_id_index ON auction (current_user_id);
         </sql>
     </changeSet>
@@ -161,11 +161,10 @@
             <tableExists tableName="auction_lot"/>
         </preConditions>
         <sql>
-            CREATE INDEX id_index ON auction_lot (id);
+            CREATE INDEX auction_lot_id_index ON auction_lot (id);
             CREATE INDEX created_by_user_id_index ON auction_lot (created_by_user_id);
             CREATE INDEX purchaser_user_id_index ON auction_lot (purchaser_user_id);
-            CREATE INDEX auction_id_index ON auction_lot (auction_id);
+            CREATE INDEX auction_lot_auction_id_index ON auction_lot (auction_id);
         </sql>
     </changeSet>
-
 </databaseChangeLog>
