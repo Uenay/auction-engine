@@ -10,9 +10,9 @@
         </preConditions>
         <sql>
             INSERT INTO role(name)
-            VALUES ('auctioneer'),
-                   ('user'),
-                   ('admin');
+            VALUES ('AUCTIONEER'),
+                   ('USER'),
+                   ('ADMIN');
         </sql>
     </changeSet>
 </databaseChangeLog>
