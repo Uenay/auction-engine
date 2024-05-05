@@ -9,7 +9,6 @@ public class DtoMapper {
                 .login(createUserRequest.getLogin())
                 .password(createUserRequest.getPassword())
                 .fullName(createUserRequest.getFullName())
-                .role(createUserRequest.getRole())
                 .build();
     }
 }

@@ -14,14 +14,9 @@ import ru.fathutdinova.auctionengine.entity.Role;
 @NoArgsConstructor
 public class UserDto {
     private int id;
-
     private String login;
-
     private String password;
-
     private String fullName;
-
     private int balance;
-
     private Role role;
 }

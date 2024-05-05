@@ -14,7 +14,7 @@
             Create table users
             (
                 id        bigserial PRIMARY KEY,
-                login     VARCHAR,
+                login     VARCHAR UNIQUE,
                 password  VARCHAR,
                 full_name VARCHAR,
                 balance   BIGINT
@@ -66,8 +66,9 @@
         <sql>
             Create table role_to_user
             (
-                user_id bigserial PRIMARY KEY references users (id),
-                role_id bigserial references role (id)
+                id bigserial PRIMARY KEY,
+                user_id bigint references users (id),
+                role_id bigint references role (id)
             )
         </sql>
     </changeSet>
@@ -168,12 +169,4 @@
         </sql>
     </changeSet>
 
-    <changeSet id="update user" author="author name">
-        <preConditions onFail="MARK_RAN">
-        </preConditions>
-        <sql>
-            ALTER TABLE user
-                ADD COLUMN role_id bigserial;
-        </sql>
-    </changeSet>
 </databaseChangeLog>
