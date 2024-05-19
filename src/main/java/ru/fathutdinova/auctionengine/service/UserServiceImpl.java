@@ -7,6 +7,8 @@ import ru.fathutdinova.auctionengine.entity.User;
 import ru.fathutdinova.auctionengine.mapper.DtoMapper;
 import ru.fathutdinova.auctionengine.repository.UserRepository;
 
+import java.util.HashSet;
+
 @Component
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -16,7 +18,9 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         User user = DtoMapper.convertToUser(userDto);
         user.setBalance(0);
-        User savedUser = userRepository.save(user);
+        HashSet<String> roles = new HashSet<>();
+        roles.add("USER");
+        User savedUser = userRepository.createUser(user, roles);
         return DtoMapper.convertToUserDto(savedUser);
     }
 

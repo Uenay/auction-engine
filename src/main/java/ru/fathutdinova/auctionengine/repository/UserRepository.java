@@ -9,6 +9,7 @@ import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.User;
 
 import java.beans.Transient;
+import java.util.List;
 import java.util.Set;
 
 @Repository
