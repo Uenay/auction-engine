@@ -168,12 +168,12 @@
         </sql>
     </changeSet>
 
-    <changeSet id="update user" author="author name">
+    <changeSet id="update users" author="author name">
         <preConditions onFail="MARK_RAN">
         </preConditions>
         <sql>
-            ALTER TABLE user
-                ADD COLUMN role_id bigserial;
+            ALTER TABLE users
+                ADD COLUMN role_id bigserial references role (id); --foreign key??
         </sql>
     </changeSet>
 </databaseChangeLog>
