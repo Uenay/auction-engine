@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.fathutdinova.auctionengine.entity.Role;
 
+import java.util.Set;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,5 +20,5 @@ public class UserDto {
     private String password;
     private String fullName;
     private int balance;
-    private Role role;
+    private Set<Role> roles;
 }
