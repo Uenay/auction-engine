@@ -1,6 +1,7 @@
 package ru.fathutdinova.auctionengine.mapper;
 
 import ru.fathutdinova.auctionengine.api.CreateUserRequest;
+import ru.fathutdinova.auctionengine.api.CreateUserResponse;
 import ru.fathutdinova.auctionengine.dto.UserDto;
 import ru.fathutdinova.auctionengine.entity.User;
 
@@ -30,6 +31,16 @@ public class DtoMapper {
                 .login(user.getLogin())
                 .id(user.getId())
                 .balance(user.getBalance())
+                .build();
+    }
+
+    public static CreateUserResponse convertToCreateUserResponse(UserDto userDto){
+        return CreateUserResponse.builder()
+                .login(userDto.getLogin())
+                .balance(userDto.getBalance())
+                .fullName(userDto.getFullName())
+                .id(userDto.getId())
+                .roles(userDto.getRoles())
                 .build();
     }
 
