@@ -22,7 +22,7 @@ public class TestController {
         user.setLogin("userLogin2");
         user.setFullName("user full name");
         user.setPassword("userPassword");
-        return userRepository.createUser(user, Set.of("USER", "AUCTIONEER"));
+        return userRepository.createUser(user, Set.of(Role.USER, Role.AUCTIONEER));
     }
 
     @GetMapping("/get")

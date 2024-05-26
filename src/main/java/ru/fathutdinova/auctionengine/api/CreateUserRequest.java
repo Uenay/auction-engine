@@ -3,7 +3,6 @@ package ru.fathutdinova.auctionengine.api;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import ru.fathutdinova.auctionengine.entity.Role;
 
 @SuperBuilder
 @Data

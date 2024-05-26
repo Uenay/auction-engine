@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fathutdinova.auctionengine.entity.Role;
+import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
 
-import java.beans.Transient;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -27,10 +28,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void addRolesToUser(long userId, Set<String> roles);
 
     @Transactional
-    default User createUser(User user, Set<String> roles) {
+    default User createUser(User user, Set<Role> roles) {
         createUser(user.getLogin(), user.getPassword(), user.getFullName(), user.getBalance());
         User createdUser = findUserByLogin(user.getLogin());
-        addRolesToUser(createdUser.getId(), roles);
+        Set<String> roleSet = roles.stream()
+                .map(Role::name)
+                .collect(Collectors.toSet());
+        addRolesToUser(createdUser.getId(), roleSet);
+        Set<RoleEntity> roleEntitySet = new HashSet<>();
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName();
+        roleEntitySet.add()
+        createdUser.setRoles();
         return createdUser;
     }
 }
