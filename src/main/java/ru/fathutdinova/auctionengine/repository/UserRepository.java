@@ -1,17 +1,16 @@
 package ru.fathutdinova.auctionengine.repository;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
+import ru.fathutdinova.auctionengine.exception.DuplicatedUserLoginException;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -28,18 +27,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void addRolesToUser(long userId, Set<String> roles);
 
     @Transactional
-    default User createUser(User user, Set<Role> roles) {
-        createUser(user.getLogin(), user.getPassword(), user.getFullName(), user.getBalance());
+    default User createUser(User user, Set<RoleEntity> roleEntities) {
+        try {
+            createUser(user.getLogin(), user.getPassword(), user.getFullName(), user.getBalance());
+        } catch (DataIntegrityViolationException ex) {
+            throw new DuplicatedUserLoginException("Логин пользьзователя уже используется", ex.getCause());
+        }
+
         User createdUser = findUserByLogin(user.getLogin());
-        Set<String> roleSet = roles.stream()
-                .map(Role::name)
-                .collect(Collectors.toSet());
-        addRolesToUser(createdUser.getId(), roleSet);
-        Set<RoleEntity> roleEntitySet = new HashSet<>();
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setName();
-        roleEntitySet.add()
-        createdUser.setRoles();
+        createdUser.setRoles(roleEntities);
         return createdUser;
     }
 }

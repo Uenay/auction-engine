@@ -7,7 +7,6 @@ import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,18 +19,12 @@ public class DtoMapper {
                 .build();
     }
 
-    //    private static Set<RoleEntity> convertToRoleEntity(Set<Role> roles){
-//        Set<RoleEntity> RoleEntitySet = new HashSet<>();
-//        RoleEntitySet
-//        return roleEntity;
-//    }
     public static User convertToUser(UserDto userDto) {
         User user = new User();
         user.setBalance(userDto.getBalance());
         user.setPassword(userDto.getPassword());
         user.setFullName(userDto.getFullName());
         user.setLogin(userDto.getLogin());
-//        user.setRoles(convertToRole(userDto.getRoles()));
         return user;
     }
 
@@ -41,7 +34,6 @@ public class DtoMapper {
                 .map(Role::valueOf)
                 .collect(Collectors.toSet());
     }
-
     public static UserDto convertToUserDto(User user) {
         return UserDto.builder()
                 .fullName(user.getFullName())
@@ -63,11 +55,4 @@ public class DtoMapper {
                 .build();
     }
 
-//    public static UserDto convertToUserDto(CreateUserRequest createUserRequest) {
-//        return UserDto.builder()
-//                .login(createUserRequest.getLogin())
-//                .password(createUserRequest.getPassword())
-//                .fullName(createUserRequest.getFullName())
-//                .build();
-//    }
 }

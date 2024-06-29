@@ -169,4 +169,13 @@
         </sql>
     </changeSet>
 
+    <changeSet id="add user modifier" author="author name">
+        <preConditions onFail="MARK_RAN">
+                <tableExists tableName="users"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE USERS ADD CONSTRAINT user_unique_login UNIQUE (login);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
