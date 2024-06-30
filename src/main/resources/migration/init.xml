@@ -14,7 +14,7 @@
             Create table users
             (
                 id        bigserial PRIMARY KEY,
-                login     VARCHAR,
+                login     VARCHAR UNIQUE,
                 password  VARCHAR,
                 full_name VARCHAR,
                 balance   BIGINT
@@ -66,8 +66,9 @@
         <sql>
             Create table role_to_user
             (
-                user_id bigserial PRIMARY KEY references users (id),
-                role_id bigserial references role (id)
+                id      bigserial PRIMARY KEY,
+                user_id bigint references users (id),
+                role_id bigint references role (id)
             )
         </sql>
     </changeSet>
@@ -167,4 +168,14 @@
             CREATE INDEX auction_lot_auction_id_index ON auction_lot (auction_id);
         </sql>
     </changeSet>
+
+    <changeSet id="add user modifier" author="author name">
+        <preConditions onFail="MARK_RAN">
+                <tableExists tableName="users"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE USERS ADD CONSTRAINT user_unique_login UNIQUE (login);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
