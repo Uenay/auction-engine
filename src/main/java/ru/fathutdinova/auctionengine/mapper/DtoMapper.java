@@ -1,7 +1,7 @@
 package ru.fathutdinova.auctionengine.mapper;
 
 import ru.fathutdinova.auctionengine.api.CreateUserRequest;
-import ru.fathutdinova.auctionengine.api.CreateUserResponse;
+import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
 import ru.fathutdinova.auctionengine.dto.UserDto;
 import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
