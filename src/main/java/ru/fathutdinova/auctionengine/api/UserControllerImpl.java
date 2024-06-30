@@ -1,6 +1,7 @@
 package ru.fathutdinova.auctionengine.api;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import ru.fathutdinova.auctionengine.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class UserControllerImpl implements UserController {
     private final UserService userService;
 
@@ -24,6 +26,7 @@ public class UserControllerImpl implements UserController {
             baseResponse = DtoMapper.convertToCreateUserResponse(savedUser);
             httpStatus = HttpStatus.OK;
         } catch (DuplicatedUserLoginException exception) {
+            log.error("Error while user creating", exception);
             baseResponse = ConflictResponse.builder()
                     .message("User with login = " + createUserRequest.getLogin() + " already exists")
                     .build();
@@ -31,7 +34,5 @@ public class UserControllerImpl implements UserController {
         }
 
         return new ResponseEntity<>(baseResponse, httpStatus);
-
-
     }
 }

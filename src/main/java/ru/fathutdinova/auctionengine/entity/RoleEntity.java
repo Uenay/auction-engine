@@ -21,8 +21,6 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    //    @Enumerated(EnumType.STRING)
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
