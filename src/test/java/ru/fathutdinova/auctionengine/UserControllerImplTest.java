@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.fathutdinova.auctionengine.api.CreateUserRequest;
-import ru.fathutdinova.auctionengine.api.CreateUserResponse;
+import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
 import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.service.UserService;
 

@@ -1,11 +1,13 @@
-package ru.fathutdinova.auctionengine;
+package ru.fathutdinova.auctionengine.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
+import ru.fathutdinova.auctionengine.repository.UserRepository;
 
 @Service
 public class UserDetailsImplService implements UserDetailsService {
@@ -23,10 +25,14 @@ public class UserDetailsImplService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with login: " + login);
         }
 
+       String []roleNames = user.getRoles().stream()
+                .map(RoleEntity::getName)
+                .toArray(String[]::new);
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getLogin())
                 .password(user.getPassword())
-                .authorities(user.getRole().name())
+                .authorities(roleNames)
                 .build();
     }
 }
