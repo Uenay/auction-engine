@@ -177,5 +177,4 @@
             ALTER TABLE USERS ADD CONSTRAINT user_unique_login UNIQUE (login);
         </sql>
     </changeSet>
-
 </databaseChangeLog>

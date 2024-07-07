@@ -1,4 +1,4 @@
-package ru.fathutdinova.auctionengine.api;
+package ru.fathutdinova.auctionengine.api.response;
 
 import lombok.Builder;
 import lombok.Data;

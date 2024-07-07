@@ -4,16 +4,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.fathutdinova.auctionengine.api.AdminControllerImpl;
+import ru.fathutdinova.auctionengine.api.AuctioneerControllerImpl;
 import ru.fathutdinova.auctionengine.api.CreateUserRequest;
-import ru.fathutdinova.auctionengine.api.CreateUserResponse;
+import ru.fathutdinova.auctionengine.api.UserControllerImpl;
+import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
+import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
+import ru.fathutdinova.auctionengine.config.SecurityConfig;
 import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.service.UserService;
 
 
 import java.util.Set;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,8 +36,6 @@ public class UserControllerImplTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private UserService userService;
 
     private static final String CREATE_USER_URL = "/user/create";
 
@@ -79,4 +88,5 @@ public class UserControllerImplTest {
                 )
                 .andExpect(status().isConflict());
     }
+
 }

@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    User findUserByLogin(String login);
+    User findByLogin(String login);
 
     @Query(value = "INSERT INTO USERS (login, password, full_name, balance) values (:login, :password, :fullName, :balance)",
             nativeQuery = true)
@@ -34,7 +34,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             throw new DuplicatedUserLoginException("Логин пользьзователя уже используется", ex.getCause());
         }
 
-        User createdUser = findUserByLogin(user.getLogin());
+        User createdUser = findByLogin(user.getLogin());
         createdUser.setRoles(roleEntities);
         return createdUser;
     }

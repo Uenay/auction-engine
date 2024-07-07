@@ -1,10 +1,3 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS role_to_user;
-DROP TABLE IF EXISTS image;
-DROP TABLE IF EXISTS auction;
-DROP TABLE IF EXISTS auction_lot;
-
 Create table users
 (
     id        serial PRIMARY KEY,
