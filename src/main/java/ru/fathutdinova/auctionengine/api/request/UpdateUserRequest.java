@@ -7,6 +7,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @NoArgsConstructor
-public class UpdateUserRequest {
-    private Integer id;
+public class UpdateUserRequest extends ByIdRequest{
 }

@@ -7,5 +7,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
-public class ConflictResponse extends BaseResponse{
+public class ConflictResponse extends BaseResponse {
 }

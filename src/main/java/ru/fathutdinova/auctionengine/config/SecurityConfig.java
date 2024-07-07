@@ -18,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    public UserDetailsImplService userDetailsService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -33,7 +32,7 @@ public class SecurityConfig {
                                 .requestMatchers("/auction/delete").hasRole("ADMIN")
                                 .requestMatchers("/auctionLot/delete").hasRole("ADMIN")
                                 .requestMatchers("/user/delete").hasRole("ADMIN")
-                                .anyRequest().hasRole("USER")  //hasAnyAuthority???
+                                .anyRequest().hasRole("USER")
                 )
                 .httpBasic(Customizer.withDefaults())
                 .build();

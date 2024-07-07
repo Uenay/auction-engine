@@ -1,4 +1,4 @@
 package ru.fathutdinova.auctionengine.api.response;
 
-public class GetUserResponse {
+public class UserResponse {
 }

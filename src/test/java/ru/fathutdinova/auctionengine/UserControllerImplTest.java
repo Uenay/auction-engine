@@ -31,14 +31,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Import(SecurityConfig.class)
 public class UserControllerImplTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private UserService userService;
 
     private static final String CREATE_USER_URL = "/user/create";
 

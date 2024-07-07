@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.fathutdinova.auctionengine.api.request.UpdateUserRequest;
 
 import ru.fathutdinova.auctionengine.api.response.UpdateUserResponse;
+import ru.fathutdinova.auctionengine.api.response.UserResponse;
 
 public interface AdminController {
     @DeleteMapping("/user/delete/{id}")
-    ResponseEntity<Void> deleteUser(@PathVariable("id") int id);
+    ResponseEntity<UserResponse> deleteUser(@PathVariable("id") int id);
 
-    @PostMapping("/user/update/")
-    UpdateUserResponse updateUser(@RequestBody UpdateUserRequest updateUserRequest);
+    @PostMapping("/user/update")
+    UserResponse updateUser(@RequestBody UpdateUserRequest updateUserRequest);
 }

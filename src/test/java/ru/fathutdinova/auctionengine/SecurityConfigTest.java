@@ -5,20 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateAuctionRequest;
+import ru.fathutdinova.auctionengine.api.request.GetFilteredAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateUserRequest;
-import ru.fathutdinova.auctionengine.config.SecurityConfig;
 
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,36 +21,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Import(SecurityConfig.class)
 public class SecurityConfigTest {
     @Autowired
     private MockMvc mockMvc;
-//    @Autowired
-//    private WebApplicationContext context;
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
-
-//    @Before("")
-//    public void setup() {
-//        mockMvc = MockMvcBuilders.webAppContextSetup(context)
-//                .addFilter(springSecurityFilterChain)
-//                .build();
-//    }
 
     @Test
     @WithMockUser
     public void testUserCannotAccessAuctionUpdate() throws Exception {
-        mockMvc.perform(post("/auction/update").with(user("user").roles("USER")).with(csrf()))
+        mockMvc.perform(post("/auction/update"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser
     public void testUserCannotAccessAuctionCreate() throws Exception {
-        mockMvc.perform(post("/auction/create").with(user("user").roles("USER")))
+        mockMvc.perform(post("/auction/create"))
                 .andExpect(status().isForbidden());
     }
 
@@ -67,8 +49,7 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(get("/auction/get")
                         .content(objectMapper.writeValueAsString(byIdRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("user").roles("USER")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isOk());
     }
 
@@ -80,8 +61,7 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(post("/auction/create")
                         .content(objectMapper.writeValueAsString(createAuctionRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("auctioneer").roles("AUCTIONEER")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isOk());
     }
     @Test
@@ -92,8 +72,7 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(post("/user/update")
                         .content(objectMapper.writeValueAsString(updateUserRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("admin").roles("ADMIN")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isOk());
     }
     @Test
@@ -104,10 +83,10 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(post("/auction/update")
                         .content(objectMapper.writeValueAsString(updateAuctionRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("admin").roles("ADMIN")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isOk());
     }
+
     @Test
     @WithMockUser(roles = "AUCTIONEER")
     public void testAuctioneerCanNotAccessAuctionLotUpdate() throws Exception {
@@ -116,10 +95,10 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(post("/auctionLot/update")
                         .content(objectMapper.writeValueAsString(updateAuctionLotRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("auctioneer").roles("AUCTIONEER")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isForbidden());
     }
+
     @Test
     @WithMockUser(roles = "ADMIN")
     public void testAdminCanNotAccessAuctionCreate() throws Exception {
@@ -128,10 +107,10 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(post("/auction/create")
                         .content(objectMapper.writeValueAsString(createAuctionRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("admin").roles("ADMIN")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isForbidden());
     }
+
     @Test
     @WithMockUser
     public void testUserCanNotAccessAuctionDelete() throws Exception {
@@ -140,8 +119,19 @@ public class SecurityConfigTest {
                 .build();
         mockMvc.perform(delete("/auction/delete")
                         .content(objectMapper.writeValueAsString(byIdRequest))
-                        .header("Content-Type", "application/json")
-                        .with(user("user").roles("USER")))
+                        .header("Content-Type", "application/json"))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser
+    public void testUserCanAccessFilteredAuctionGet() throws Exception {
+        GetFilteredAuctionRequest getFilteredAuctionRequest = GetFilteredAuctionRequest.builder()
+                .name("auction")
+                .build();
+        mockMvc.perform(get("/auction/getFiltered")
+                        .content(objectMapper.writeValueAsString(getFilteredAuctionRequest))
+                        .header("Content-Type", "application/json"))
+                .andExpect(status().isOk());
     }
 }

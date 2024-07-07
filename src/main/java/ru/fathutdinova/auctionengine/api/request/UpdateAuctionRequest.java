@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @NoArgsConstructor
-public class UpdateAuctionRequest {
-    private Integer id;
+public class UpdateAuctionRequest extends ByIdRequest{
+
 }

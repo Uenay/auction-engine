@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
+import ru.fathutdinova.auctionengine.api.request.GetFilteredAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.response.BaseResponse;
 import ru.fathutdinova.auctionengine.api.response.ConflictResponse;
 import ru.fathutdinova.auctionengine.api.response.GetAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.GetAuctionResponse;
+import ru.fathutdinova.auctionengine.api.response.GetFilteredAuctionResponse;
 import ru.fathutdinova.auctionengine.api.response.UpdateAuctionLotResponse;
 import ru.fathutdinova.auctionengine.dto.UserDto;
 import ru.fathutdinova.auctionengine.exception.DuplicatedUserLoginException;
@@ -55,6 +57,11 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<GetAuctionLotResponse> getAuctionLotById(ByIdRequest byIdRequest) {
+        return null;
+    }
+
+    @Override
+    public  ResponseEntity<GetFilteredAuctionResponse> getFilteredAuction(GetFilteredAuctionRequest getFilteredAuctionRequest){
         return null;
     }
 }
