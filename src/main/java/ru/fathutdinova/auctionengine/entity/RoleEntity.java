@@ -10,6 +10,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +25,7 @@ public class RoleEntity {
     private int id;
     private String name;
 
+    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "role_to_user", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))

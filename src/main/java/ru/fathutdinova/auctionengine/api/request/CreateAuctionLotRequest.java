@@ -9,4 +9,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CreateAuctionLotRequest {
     private String name;
+    private String description;
+    private int startBet;
 }

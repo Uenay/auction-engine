@@ -24,15 +24,22 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/user/create").anonymous()
-                                .requestMatchers("/auction/create").hasRole("AUCTIONEER")
-                                .requestMatchers("/auction/update").hasRole("ADMIN")
-                                .requestMatchers("/user/update").hasRole("ADMIN")
-                                .requestMatchers("/auctionLot/update").hasRole("ADMIN")
-                                .requestMatchers("/auction/delete").hasRole("ADMIN")
-                                .requestMatchers("/auctionLot/delete").hasRole("ADMIN")
-                                .requestMatchers("/user/delete").hasRole("ADMIN")
-                                .anyRequest().hasRole("USER")
+//                                .requestMatchers("/auction/create").hasRole("AUCTIONEER")
+//
+//                                .requestMatchers("/auction/update").hasRole("ADMIN")
+//                                .requestMatchers("/user/update").hasRole("ADMIN")
+//                                .requestMatchers("/auctionLot/update").hasRole("ADMIN")
+//                                .requestMatchers("/auction/delete").hasRole("ADMIN")
+//                                .requestMatchers("/auctionLot/delete").hasRole("ADMIN")
+//                                .requestMatchers("/user/delete").hasRole("ADMIN")
+//
+//                                .requestMatchers("/auctionLot/create").hasRole("USER")
+                                .anyRequest().permitAll()
+
+//                                .requestMatchers("/user/**").hasRole("USER")
+
+//                                .anyRequest().hasRole("USER")
+
                 )
                 .httpBasic(Customizer.withDefaults())
                 .build();

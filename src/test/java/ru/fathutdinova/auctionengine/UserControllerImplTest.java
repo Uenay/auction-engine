@@ -4,27 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.fathutdinova.auctionengine.api.AdminControllerImpl;
-import ru.fathutdinova.auctionengine.api.AuctioneerControllerImpl;
-import ru.fathutdinova.auctionengine.api.CreateUserRequest;
-import ru.fathutdinova.auctionengine.api.UserControllerImpl;
-import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateAuctionLotRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateUserRequest;
+import ru.fathutdinova.auctionengine.api.response.CreateAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
-import ru.fathutdinova.auctionengine.config.SecurityConfig;
 import ru.fathutdinova.auctionengine.entity.Role;
-import ru.fathutdinova.auctionengine.service.UserService;
-
 
 import java.util.Set;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,6 +27,8 @@ public class UserControllerImplTest {
     private ObjectMapper objectMapper;
 
     private static final String CREATE_USER_URL = "/user/create";
+    private static final String CREATE_AUCTION_LOT_URL = "/auctionLot/create";
+    private static final String UPDATE_AUCTION_LOT_URL = "/auctionLot/update";
 
     @Test
     void createUserMvc() throws Exception {
@@ -87,6 +78,31 @@ public class UserControllerImplTest {
 
                 )
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    void createAuctionLotMvc() throws Exception {
+        CreateAuctionLotRequest createAuctionLotRequest = CreateAuctionLotRequest.builder()
+                .name("aaa")
+                .description("aaaaaa")
+                .startBet(1)
+                .build();
+        CreateAuctionLotResponse createAuctionLotResponse = CreateAuctionLotResponse.builder()
+                .name(createAuctionLotRequest.getName())
+                .description(createAuctionLotRequest.getDescription())
+                .startBet(createAuctionLotRequest.getStartBet())
+                .build();
+        mockMvc.perform(
+                        post(CREATE_AUCTION_LOT_URL)
+                                .content(objectMapper.writeValueAsString(createAuctionLotRequest))
+                                .header("Content-Type", "multipart/form-data")
+
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value(createAuctionLotResponse.getName()))
+                .andExpect(jsonPath("$.description").value(createAuctionLotResponse.getDescription()))
+                .andExpect(jsonPath("$.startBet").value(createAuctionLotResponse.getStartBet()));
     }
 
 }

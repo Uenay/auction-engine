@@ -1,8 +1,15 @@
 package ru.fathutdinova.auctionengine.mapper;
 
-import ru.fathutdinova.auctionengine.api.CreateUserRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateUserRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateAuctionLotRequest;
+import ru.fathutdinova.auctionengine.api.request.UpdateAuctionLotRequest;
+import ru.fathutdinova.auctionengine.api.response.CreateAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
+import ru.fathutdinova.auctionengine.api.response.GetAuctionLotResponse;
+import ru.fathutdinova.auctionengine.api.response.UpdateAuctionLotResponse;
+import ru.fathutdinova.auctionengine.dto.AuctionLotDto;
 import ru.fathutdinova.auctionengine.dto.UserDto;
+import ru.fathutdinova.auctionengine.entity.AuctionLot;
 import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
@@ -28,12 +35,13 @@ public class DtoMapper {
         return user;
     }
 
-    private static Set<Role> convertToRole(Set<RoleEntity> roleEntitySet){
+    private static Set<Role> convertToRole(Set<RoleEntity> roleEntitySet) {
         return roleEntitySet.stream()
                 .map(RoleEntity::getName)
                 .map(Role::valueOf)
                 .collect(Collectors.toSet());
     }
+
     public static UserDto convertToUserDto(User user) {
         return UserDto.builder()
                 .fullName(user.getFullName())
@@ -55,4 +63,68 @@ public class DtoMapper {
                 .build();
     }
 
+    public static AuctionLot convertToAuctionLot(AuctionLotDto auctionLotDto) {
+        AuctionLot auctionLot = new AuctionLot();
+        auctionLot.setName(auctionLotDto.getName());
+        auctionLot.setDescription(auctionLotDto.getDescription());
+        auctionLot.setStartBet(auctionLotDto.getStartBet());
+//        auctionLot.setImage(auctionLot.getImage());
+        auctionLot.setFinalBet(auctionLotDto.getFinalBet());
+        return auctionLot;
+    }
+
+    public static AuctionLotDto convertToAuctionLotDto(AuctionLot auctionLot) {
+        return AuctionLotDto.builder()
+                .name(auctionLot.getName())
+                .description(auctionLot.getDescription())
+                .startBet(auctionLot.getStartBet())
+                .finalBet(auctionLot.getFinalBet())
+                .id(auctionLot.getId())
+                .build();
+    }
+
+    public static AuctionLotDto convertToAuctionLotDto(CreateAuctionLotRequest createAuctionLotRequest) {
+        return AuctionLotDto.builder()
+                .name(createAuctionLotRequest.getName())
+                .description(createAuctionLotRequest.getDescription())
+                .startBet(createAuctionLotRequest.getStartBet())
+                .build();
+    }
+
+    public static CreateAuctionLotResponse convertToCreateAuctionLotResponse(AuctionLotDto auctionLotDto) {
+        return CreateAuctionLotResponse.builder()
+                .name(auctionLotDto.getName())
+                .description(auctionLotDto.getDescription())
+                .startBet(auctionLotDto.getStartBet())
+                .id(auctionLotDto.getId())
+                .build();
+    }
+    public static GetAuctionLotResponse convertToGetResponse(AuctionLotDto auctionLotDto) {
+        return GetAuctionLotResponse.builder()
+                .id(auctionLotDto.getId())
+                .name(auctionLotDto.getName())
+                .description(auctionLotDto.getDescription())
+                .startBet(auctionLotDto.getStartBet())
+                .finalBet(auctionLotDto.getFinalBet())
+                .creator(auctionLotDto.getCreator())
+                .purchaser(auctionLotDto.getPurchaser())
+                .auction(auctionLotDto.getAuction())
+                .build();
+    }
+    public static AuctionLotDto convertToAuctionLotDto(UpdateAuctionLotRequest updateAuctionLotRequest) {
+        return AuctionLotDto.builder()
+                .id(updateAuctionLotRequest.getId())
+                .name(updateAuctionLotRequest.getName())
+                .description(updateAuctionLotRequest.getDescription())
+                .startBet(updateAuctionLotRequest.getStartBet())
+                .build();
+    }
+    public static UpdateAuctionLotResponse convertToUpdateAuctionLotResponse(AuctionLotDto auctionLotDto) {
+        return UpdateAuctionLotResponse.builder()
+                .name(auctionLotDto.getName())
+                .description(auctionLotDto.getDescription())
+                .startBet(auctionLotDto.getStartBet())
+                .id(auctionLotDto.getId())
+                .build();
+    }
 }
