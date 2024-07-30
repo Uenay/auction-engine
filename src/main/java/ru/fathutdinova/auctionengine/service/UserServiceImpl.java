@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.fathutdinova.auctionengine.dto.AuctionLotDto;
 import ru.fathutdinova.auctionengine.dto.UserDto;
+import ru.fathutdinova.auctionengine.entity.AuctionLot;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
 import ru.fathutdinova.auctionengine.entity.User;
 import ru.fathutdinova.auctionengine.mapper.DtoMapper;
+import ru.fathutdinova.auctionengine.repository.AuctionLotRepository;
 import ru.fathutdinova.auctionengine.repository.RoleRepository;
 import ru.fathutdinova.auctionengine.repository.UserRepository;
 
@@ -34,5 +37,6 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.createUser(user, roleEntitySet);
         return DtoMapper.convertToUserDto(savedUser);
     }
+
 
 }

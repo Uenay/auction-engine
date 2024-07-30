@@ -4,29 +4,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateAuctionLotRequest;
+import ru.fathutdinova.auctionengine.api.request.CreateUserRequest;
 import ru.fathutdinova.auctionengine.api.request.GetFilteredAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.response.BaseResponse;
-import ru.fathutdinova.auctionengine.api.response.GetAuctionLotResponse;
-import ru.fathutdinova.auctionengine.api.response.GetAuctionResponse;
+import ru.fathutdinova.auctionengine.api.response.CreateAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.GetFilteredAuctionResponse;
-import ru.fathutdinova.auctionengine.api.response.UpdateAuctionLotResponse;
+
+import java.io.IOException;
 
 public interface UserController {
     @PostMapping("/user/create")
     ResponseEntity<BaseResponse> createUser(@RequestBody CreateUserRequest createUserRequest);
 
     @GetMapping("/auction/get")
-    ResponseEntity<GetAuctionResponse> getAuctionById(@RequestBody ByIdRequest byIdRequest);
+    ResponseEntity<BaseResponse> getAuctionById(@RequestBody ByIdRequest byIdRequest);
 
-    @PostMapping("/auctionLot/update")
-    ResponseEntity<UpdateAuctionLotResponse> updateAuctionLot(@RequestBody UpdateAuctionLotRequest updateAuctionLotRequest);
+    @PostMapping(value = "/auctionLot/update", consumes = "multipart/form-data")
+    ResponseEntity<BaseResponse> updateAuctionLot(@RequestParam(name ="lotImage", required = false) MultipartFile logImage, UpdateAuctionLotRequest updateAuctionLotRequest) throws IOException;
 
     @GetMapping("/auctionLot/get")
-    ResponseEntity<GetAuctionLotResponse> getAuctionLotById(@RequestBody ByIdRequest byIdRequest);
+    ResponseEntity<BaseResponse> getAuctionLotById(@RequestBody ByIdRequest byIdRequest);
 
     @GetMapping("/auction/getFiltered")
     ResponseEntity<GetFilteredAuctionResponse> getFilteredAuction(@RequestBody GetFilteredAuctionRequest getFilteredAuctionRequest);
+    @PostMapping(value = "/auctionLot/create", consumes = "multipart/form-data")
+    CreateAuctionLotResponse createAuctionLot(@RequestParam("lotImage") MultipartFile logImage, CreateAuctionLotRequest createAuctionLotRequest) throws IOException;
+
 }

@@ -120,7 +120,7 @@
                 start_time      DATE,
                 end_time        DATE,
                 current_bet     BIGINT,
-                current_user_id bigserial references users (id)
+                current_user_id bigint references users (id)
             )
         </sql>
     </changeSet>
@@ -148,11 +148,11 @@
                 start_bet          BIGINT,
                 name               VARCHAR,
                 description        VARCHAR,
-                created_by_user_id bigserial references users (id),
+                created_by_user_id bigint references users (id),
                 final_bet          BIGINT,
-                purchaser_user_id  bigserial references users (id),
-                auction_id         bigserial references auction (id),
-                image_id           bigserial references image (id)
+                purchaser_user_id  bigint references users (id),
+                auction_id         bigint references auction (id),
+                image_id           bigint references image (id)
             )
         </sql>
     </changeSet>
