@@ -18,6 +18,6 @@ public class AuctionDto {
     private Date startTime;
     private Date endTime;
     private int currentBet;
-    private AuctionLot auctionLot;
+    private int auctionLotId;
     private User currentUser;
 }

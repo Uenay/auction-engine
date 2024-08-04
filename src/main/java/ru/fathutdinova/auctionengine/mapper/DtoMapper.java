@@ -136,14 +136,15 @@ public class DtoMapper {
                 .startTime(auction.getStartTime())
                 .endTime(auction.getEndTime())
                 .currentBet(auction.getCurrentBet())
-                .auctionLot(auction.getAuctionLot())
+                .auctionLotId(auction.getAuctionLot().getId())
                 .build();
     }
     public static CreateAuctionResponse convertToCreateAuctionResponse(AuctionDto auctionDto) {
+
         return CreateAuctionResponse.builder()
                 .startTime(auctionDto.getStartTime())
                 .endTime(auctionDto.getEndTime())
-                .auctionLot(auctionDto.getAuctionLot())
+                .auctionLot(auctionDto.getAuctionLotId())
                 .currentBet(auctionDto.getCurrentBet())
                 .currentUser(auctionDto.getCurrentUser())
                 .build();

@@ -1,13 +1,17 @@
 package ru.fathutdinova.auctionengine.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.RestController;
 import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionRequest;
+import ru.fathutdinova.auctionengine.api.response.BaseResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateAuctionResponse;
+import ru.fathutdinova.auctionengine.api.response.NotFoundResponse;
 import ru.fathutdinova.auctionengine.api.response.UpdateAuctionResponse;
 import ru.fathutdinova.auctionengine.dto.AuctionDto;
 import ru.fathutdinova.auctionengine.dto.AuctionLotDto;
@@ -22,15 +26,17 @@ public class AuctioneerControllerImpl implements AuctioneerController {
     private final AuctionService auctionService;
     private final AuctionLotService auctionLotService;
     @Override
-    public CreateAuctionResponse createAuction(CreateAuctionRequest createAuctionRequest) {
-        AuctionLotDto auctionLotDto = auctionLotService.getAuctionLotById(createAuctionRequest.getAuctionLotId());
-        AuctionLot auctionLot = DtoMapper.convertToAuctionLot(auctionLotDto);
+    public ResponseEntity<BaseResponse> createAuction(CreateAuctionRequest createAuctionRequest){
+        BaseResponse baseResponse;
         AuctionDto auctionDto = AuctionDto.builder()
                 .startTime(createAuctionRequest.getStartTime())
-                .auctionLot(auctionLot)
+                .auctionLotId(createAuctionRequest.getAuctionLotId())
                 .build();
         AuctionDto savedAuction = auctionService.createAuction(auctionDto);
-        return DtoMapper.convertToCreateAuctionResponse(savedAuction);
+        baseResponse = DtoMapper.convertToCreateAuctionResponse(savedAuction);
+
+
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
 

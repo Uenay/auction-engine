@@ -1,5 +1,6 @@
 package ru.fathutdinova.auctionengine.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,6 @@ public class Auction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_user_id")
     private User currentUser;
-    @OneToOne
-    @JoinColumn(name = "auction_lot_id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy="auction")
     private AuctionLot auctionLot;
 }

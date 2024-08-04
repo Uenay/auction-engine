@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.fathutdinova.auctionengine.api.request.ByIdRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionRequest;
+import ru.fathutdinova.auctionengine.api.response.BaseResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateAuctionResponse;
 import ru.fathutdinova.auctionengine.api.response.UpdateAuctionResponse;
 
 public interface AuctioneerController {
     @PostMapping("/auction/create")
-    CreateAuctionResponse createAuction(@RequestBody CreateAuctionRequest createAuctionRequest);
+    ResponseEntity<BaseResponse> createAuction(@RequestBody CreateAuctionRequest createAuctionRequest);
 
 
     @PostMapping("/auction/update")
