@@ -171,10 +171,22 @@
 
     <changeSet id="add user modifier" author="author name">
         <preConditions onFail="MARK_RAN">
-                <tableExists tableName="users"/>
+            <tableExists tableName="users"/>
         </preConditions>
         <sql>
-            ALTER TABLE USERS ADD CONSTRAINT user_unique_login UNIQUE (login);
+            ALTER TABLE USERS
+                ADD CONSTRAINT user_unique_login UNIQUE (login);
         </sql>
     </changeSet>
+
+<!--    <changeSet id="add column to auction" author="author name">-->
+<!--        <preConditions onFail="MARK_RAN">-->
+<!--            <tableExists tableName="auction"/>-->
+<!--        </preConditions>-->
+<!--        <sql>-->
+<!--            ALTER TABLE auction-->
+<!--                ADD COLUMN auction_lot_id bigint references auction_lot (id);-->
+<!--        </sql>-->
+<!--    </changeSet>-->
 </databaseChangeLog>
+

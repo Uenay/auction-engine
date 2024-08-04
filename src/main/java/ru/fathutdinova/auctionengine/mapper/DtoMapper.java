@@ -1,14 +1,18 @@
 package ru.fathutdinova.auctionengine.mapper;
 
+import ru.fathutdinova.auctionengine.api.request.CreateAuctionRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateUserRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.request.UpdateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.response.CreateAuctionLotResponse;
+import ru.fathutdinova.auctionengine.api.response.CreateAuctionResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
 import ru.fathutdinova.auctionengine.api.response.GetAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.UpdateAuctionLotResponse;
+import ru.fathutdinova.auctionengine.dto.AuctionDto;
 import ru.fathutdinova.auctionengine.dto.AuctionLotDto;
 import ru.fathutdinova.auctionengine.dto.UserDto;
+import ru.fathutdinova.auctionengine.entity.Auction;
 import ru.fathutdinova.auctionengine.entity.AuctionLot;
 import ru.fathutdinova.auctionengine.entity.Role;
 import ru.fathutdinova.auctionengine.entity.RoleEntity;
@@ -68,7 +72,7 @@ public class DtoMapper {
         auctionLot.setName(auctionLotDto.getName());
         auctionLot.setDescription(auctionLotDto.getDescription());
         auctionLot.setStartBet(auctionLotDto.getStartBet());
-//        auctionLot.setImage(auctionLot.getImage());
+        auctionLot.setImage(auctionLot.getImage());
         auctionLot.setFinalBet(auctionLotDto.getFinalBet());
         return auctionLot;
     }
@@ -125,6 +129,23 @@ public class DtoMapper {
                 .description(auctionLotDto.getDescription())
                 .startBet(auctionLotDto.getStartBet())
                 .id(auctionLotDto.getId())
+                .build();
+    }
+    public static AuctionDto convertToAuctionDto(Auction auction) {
+        return AuctionDto.builder()
+                .startTime(auction.getStartTime())
+                .endTime(auction.getEndTime())
+                .currentBet(auction.getCurrentBet())
+                .auctionLot(auction.getAuctionLot())
+                .build();
+    }
+    public static CreateAuctionResponse convertToCreateAuctionResponse(AuctionDto auctionDto) {
+        return CreateAuctionResponse.builder()
+                .startTime(auctionDto.getStartTime())
+                .endTime(auctionDto.getEndTime())
+                .auctionLot(auctionDto.getAuctionLot())
+                .currentBet(auctionDto.getCurrentBet())
+                .currentUser(auctionDto.getCurrentUser())
                 .build();
     }
 }
