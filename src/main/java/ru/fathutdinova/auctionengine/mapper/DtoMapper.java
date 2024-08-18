@@ -142,9 +142,10 @@ public class DtoMapper {
     public static CreateAuctionResponse convertToCreateAuctionResponse(AuctionDto auctionDto) {
 
         return CreateAuctionResponse.builder()
+                .id(auctionDto.getId())
                 .startTime(auctionDto.getStartTime())
                 .endTime(auctionDto.getEndTime())
-                .auctionLot(auctionDto.getAuctionLotId())
+                .auctionLotId(auctionDto.getAuctionLotId())
                 .currentBet(auctionDto.getCurrentBet())
                 .currentUser(auctionDto.getCurrentUser())
                 .build();

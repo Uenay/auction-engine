@@ -7,6 +7,10 @@ Create table users
     balance   INT
 );
 
+INSERT INTO users(login, password, full_name, balance)
+VALUES
+    ('auctioneer', 'aaa', 'aaaaa', 0);
+
 Create table role
 (
     id   serial PRIMARY KEY,
@@ -54,4 +58,10 @@ Create table auction_lot
     auction_id         int references auction (id),
     image_id           int references image (id)
 );
+
+INSERT INTO image(image_data)
+VALUES
+    ('111'),
+    ('22222'),
+    ('333');
 
