@@ -1,18 +1,19 @@
-package ru.fathutdinova.auctionengine.api.response;
+package ru.fathutdinova.auctionengine.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
 import ru.fathutdinova.auctionengine.entity.AuctionLot;
 import ru.fathutdinova.auctionengine.entity.User;
 
-
 import java.util.Date;
 
-@ToString(callSuper = true)
-@SuperBuilder
 @Data
-public class CreateAuctionResponse extends BaseResponse{
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuctionDto {
     private int id;
     private Date startTime;
     private Date endTime;

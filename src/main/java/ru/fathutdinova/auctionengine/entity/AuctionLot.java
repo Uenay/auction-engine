@@ -37,7 +37,4 @@ public class AuctionLot {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private Image image;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "image_id")
-//    private MultipartFile image;
 }

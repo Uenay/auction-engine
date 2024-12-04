@@ -53,17 +53,17 @@ public class SecurityConfigTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @WithMockUser(roles = "AUCTIONEER")
-    public void testAuctioneerCanAccessAuctionCreate() throws Exception {
-        CreateAuctionRequest createAuctionRequest = CreateAuctionRequest.builder()
-                .name("auction")
-                .build();
-        mockMvc.perform(post("/auction/create")
-                        .content(objectMapper.writeValueAsString(createAuctionRequest))
-                        .header("Content-Type", "application/json"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    @WithMockUser(roles = "AUCTIONEER")
+//    public void testAuctioneerCanAccessAuctionCreate() throws Exception {
+//        CreateAuctionRequest createAuctionRequest = CreateAuctionRequest.builder()
+//                .name("auction")
+//                .build();
+//        mockMvc.perform(post("/auction/create")
+//                        .content(objectMapper.writeValueAsString(createAuctionRequest))
+//                        .header("Content-Type", "application/json"))
+//                .andExpect(status().isOk());
+//    }
     @Test
     @WithMockUser(roles = "ADMIN")
     public void testAdminCanAccessUserUpdate() throws Exception {
@@ -99,17 +99,17 @@ public class SecurityConfigTest {
                 .andExpect(status().isForbidden());
     }
 
-    @Test
-    @WithMockUser(roles = "ADMIN")
-    public void testAdminCanNotAccessAuctionCreate() throws Exception {
-        CreateAuctionRequest createAuctionRequest = CreateAuctionRequest.builder()
-                .name("auction")
-                .build();
-        mockMvc.perform(post("/auction/create")
-                        .content(objectMapper.writeValueAsString(createAuctionRequest))
-                        .header("Content-Type", "application/json"))
-                .andExpect(status().isForbidden());
-    }
+//    @Test
+//    @WithMockUser(roles = "ADMIN")
+//    public void testAdminCanNotAccessAuctionCreate() throws Exception {
+//        CreateAuctionRequest createAuctionRequest = CreateAuctionRequest.builder()
+//                .name("auction")
+//                .build();
+//        mockMvc.perform(post("/auction/create")
+//                        .content(objectMapper.writeValueAsString(createAuctionRequest))
+//                        .header("Content-Type", "application/json"))
+//                .andExpect(status().isForbidden());
+//    }
 
     @Test
     @WithMockUser

@@ -5,15 +5,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 import ru.fathutdinova.auctionengine.api.request.CreateAuctionLotRequest;
 import ru.fathutdinova.auctionengine.api.request.CreateUserRequest;
 import ru.fathutdinova.auctionengine.api.response.CreateAuctionLotResponse;
 import ru.fathutdinova.auctionengine.api.response.CreateUserResponse;
 import ru.fathutdinova.auctionengine.entity.Role;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
 
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,9 +100,13 @@ public class UserControllerImplTest {
                 .description(createAuctionLotRequest.getDescription())
                 .startBet(createAuctionLotRequest.getStartBet())
                 .build();
+        InputStream is = this.getClass().getResourceAsStream("backgroundDefault.jpg");
+        MockMultipartFile image = new MockMultipartFile("lotImage", "111", MediaType.IMAGE_JPEG_VALUE, is);
         mockMvc.perform(
-                        post(CREATE_AUCTION_LOT_URL)
-                                .content(objectMapper.writeValueAsString(createAuctionLotRequest))
+                        multipart(CREATE_AUCTION_LOT_URL).file(image)
+                                .param("name", "aaa")
+                                .param("description", "aaaaaa")
+                                .param("startBet", "1")
                                 .header("Content-Type", "multipart/form-data")
 
                 )
